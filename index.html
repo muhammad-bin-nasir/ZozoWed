@@ -3,351 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Double Celebration</title>
+<title>Aiza's Wedding Invitation</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
-    /* --- RESET & GLOBAL --- */
+    /* --- RESET & CORE --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body { 
+        background-color: #000; 
+        color: #f0e6d2; 
         font-family: 'Playfair Display', serif; 
-        background: #000; 
-        color: #fff;
         overflow: hidden; 
+        height: 100vh; width: 100%;
     }
 
-    /* --- THE COVER SCREEN --- */
-/* --- THE COVER SCREEN --- */
-    #cover {
+    /* --- COLORS --- */
+    :root {
+        --gold: #d4af37;
+        --dark-gold: #aa8c2c;
+    }
+
+    /* --- BACKGROUNDS --- */
+    .bg-video {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; z-index: -1;
+        opacity: 0.5;
+        filter: sepia(30%) contrast(110%);
+    }
+    
+    .bg-image {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; z-index: -2;
+        transition: transform 10s ease;
+    }
+    .slide.active .bg-image { transform: scale(1.1); }
+
+    /* --- 1. COVER SCREEN --- */
+    #cover-screen {
         position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-        background-color: #2c0404; 
-        background-image: linear-gradient(rgba(44, 4, 4, 0.5), rgba(44, 4, 4, 0.5)), url('pic.jpg');
-        background-size: cover; background-position: center;
-        color: #fff; z-index: 1000;
-        display: flex; flex-direction: column; justify-content: space-between;
-        
-        /* INCREASED BOTTOM PADDING FOR MOBILE ACCESSIBILITY */
-        padding: 40px 25px 80px 25px; 
-        
-        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-    }
-
-    /* CENTERED BUTTON FOR BETTER REACH ON PHONES */
-    .bottom-row { 
-        display: flex; 
-        justify-content: center; 
-        width: 100%;
-        margin-bottom: 20px; 
-    }
-    .top-row {
-        display: flex; justify-content: space-between; align-items: center;
-        font-family: 'Lato', sans-serif; text-transform: uppercase;
-        font-size: 0.75rem; letter-spacing: 2px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        padding-bottom: 15px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-    .title-container { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-    .big-title { font-size: 10vw; line-height: 1; font-weight: 400; letter-spacing: -2px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-    .big-title span { display: block; font-style: italic; font-size: 6vw; opacity: 0.9; margin: 10px 0; }
-    
-    .enter-btn {
-        background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-        color: #fff; border: 1px solid rgba(255,255,255,0.5); 
-        padding: 18px 45px; border-radius: 100px;
-        font-size: 0.9rem; font-family: 'Lato', sans-serif;
-        cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
-        transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .enter-btn:hover { background: #fff; color: #5e0b0b; }
-    .slide-up { transform: translateY(-100%); }
-
-    /* --- SCROLL SNAP CONTAINER --- */
-    .snap-container {
-        height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;
-        opacity: 0; transition: opacity 1s ease 0.6s;
-    }
-    .show-content { opacity: 1; }
-
-    /* --- GENERIC SECTION STYLES --- */
-    section {
-        height: 100vh; width: 100%; scroll-snap-align: start;
+        z-index: 9999;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
-        padding: 20px; position: relative; background-size: cover; background-position: center;
-    }
-    h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 400; line-height: 1.1; text-shadow: 0 2px 5px rgba(0,0,0,0.3); text-align: center; }
-    p { font-family: 'Lato', sans-serif; line-height: 1.6; font-size: 1rem; text-align: center; }
-    .divider { width: 60px; height: 1px; margin: 30px auto; opacity: 0.7; background: #fff; }
-
-    /* --- SECTION 1: INTRO --- */
-    #sec-intro {
-        background-color: #fdfbf7;
-        background-image: linear-gradient(rgba(253, 251, 247, 0.95), rgba(253, 251, 247, 0.95)), url('https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=1920&auto=format&fit=crop');
-        color: #5e0b0b;
-    }
-    #sec-intro h2 { text-shadow: none; }
-    #sec-intro .unit-number { color: #5e0b0b; }
-    #sec-intro .divider { background: #5e0b0b; }
-    .countdown-wrapper { margin-top: 30px; }
-    #countdown { display: flex; justify-content: center; gap: 15px; margin-top: 20px;}
-    .time-unit { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
-    .unit-number { font-size: 2.2rem; font-weight: 500; font-variant-numeric: tabular-nums; }
-    .unit-label { font-family: 'Lato', sans-serif; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
-    
-    /* --- SECTION 2: LOCATION --- */
-    #sec-location {
-        background-color: #333;
-        background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1920&auto=format&fit=crop');
-        color: #fff;
-    }
-    .venue-card {
-        border: 1px solid rgba(255,255,255,0.5); padding: 40px;
-        background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
-        max-width: 450px; width: 100%; text-align: center;
-    }
-    .map-btn {
-        display: inline-block; text-decoration: none; border: 1px solid #fff; color: #fff;
-        padding: 10px 25px; font-family: 'Lato', sans-serif; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;
-        margin-top: 20px; transition: all 0.3s;
-    }
-    .map-btn:hover { background: #fff; color: #000; }
-
-    /* --- SECTION 3: DRESS CODE --- */
-    #sec-dress-code {
-        background-color: #222;
-        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('pic3.jpg');
-    }
-    .glass-card {
-        background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-        padding: 40px; border: 1px solid rgba(255, 255, 255, 0.2);
-        max-width: 500px; width: 100%; text-align: center; border-radius: 4px;
-    }
-
-    /* --- SECTION 4: GUEST --- */
-    #sec-guest {
-        background-color: #5e0b0b;
-        background-image: linear-gradient(rgba(60, 10, 10, 0.8), rgba(60, 10, 10, 0.8)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1920&auto=format&fit=crop');
-        color: #fff;
-    }
-    .ticket-stub {
-        border: 2px dashed rgba(255,255,255,0.3); padding: 30px; width: 100%; max-width: 400px; position: relative; text-align: center;
-    }
-    .ticket-stub::before, .ticket-stub::after {
-        content: ''; position: absolute; width: 20px; height: 20px; background: #2b0404; border-radius: 50%; top: 50%; transform: translateY(-50%);
-    }
-    .ticket-stub::before { left: -12px; }
-    .ticket-stub::after { right: -12px; }
-    .big-number { font-size: 4rem; display: block; line-height: 1; margin-bottom: 10px; color: #d4af37; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
-
-    /* --- SECTION 5: TIMELINE --- */
-    #sec-timeline {
-        background-color: #1a1a1a;
-        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1920&auto=format&fit=crop');
-        color: #fff;
-    }
-    .timeline { position: relative; max-width: 500px; width: 100%; padding-left: 20px; text-align: left; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 1px; background: rgba(255,255,255,0.3); }
-    .event-row { position: relative; margin-bottom: 35px; padding-left: 20px; }
-    .event-row::before { content: ''; position: absolute; left: -5px; top: 5px; width: 11px; height: 11px; background: #d4af37; border-radius: 50%; box-shadow: 0 0 10px #d4af37;}
-    .event-time { font-family: 'Lato'; font-size: 0.8rem; color: #ccc; text-transform: uppercase; letter-spacing: 1px; }
-    .event-desc { font-size: 1.4rem; color: #fff; margin-top: 5px; font-weight: 400; }
-
-    /* --- SECTION 6: FAQS --- */
-    #sec-faq {
-        background-color: #f5f5f5;
-        background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=1920&auto=format&fit=crop');
-        color: #5e0b0b;
-    }
-    #sec-faq h2 { text-shadow: none; }
-    .faq-grid { display: grid; gap: 20px; text-align: left; max-width: 500px; width: 100%; }
-    .faq-item { background: #fff; padding: 20px; border-left: 3px solid #5e0b0b; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-    .faq-q { font-family: 'Lato'; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
-    .faq-a { font-size: 0.9rem; color: #555; }
-
-    /* --- SECTION 7: FINAL MESSAGE (NEW END) --- */
-    #sec-final {
-        background-color: #000;
-        background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1510133769068-070104928014?q=80&w=1920&auto=format&fit=crop');
-        color: #fff;
-    }
-    .final-card {
         text-align: center;
-        max-width: 600px;
+        transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        background: #000;
     }
-    .final-card h2 { font-size: 4rem; font-style: italic; margin-bottom: 10px; color: #d4af37; }
-    .final-card p { font-size: 1.2rem; color: rgba(255,255,255,0.8); letter-spacing: 1px; }
+    .cover-content { position: relative; z-index: 2; padding: 20px; mix-blend-mode: hard-light; }
+    .slide-up-out { transform: translateY(-100%); }
 
-    .scroll-hint { position: absolute; bottom: 30px; font-size: 1.5rem; animation: float 2s infinite; opacity: 0.6; color: #5e0b0b;}
-    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(10px);} }
+    .cover-ornament { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
+    .cover-names {
+        font-family: 'Cinzel', serif; font-size: 5rem; text-transform: uppercase; letter-spacing: 8px; color: #fff;
+        border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 20px 40px; margin: 20px 0;
+    }
+    .open-btn {
+        margin-top: 40px; padding: 15px 40px; background: transparent; border: 2px solid var(--gold); color: var(--gold);
+        font-family: 'Cinzel', serif; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
+        transition: all 0.4s ease;
+    }
+    .open-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+
+    /* --- 2. SLIDER CONTAINER --- */
+    #slider-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+
+    /* --- MORPHING SLIDES LOGIC --- */
+    .slide {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        opacity: 0; pointer-events: none; z-index: 1;
+        transition: opacity 0.5s ease;
+    }
+    .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
+
+    /* Effect A: Circular Expand (Iris) */
+    .slide[data-effect="circle"] {
+        clip-path: circle(0% at 50% 50%);
+        transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .slide.active[data-effect="circle"] { clip-path: circle(150% at 50% 50%); }
+
+    /* Effect B: Vertical Curtain */
+    .slide[data-effect="curtain"] {
+        clip-path: inset(0 50% 0 50%);
+        transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .slide.active[data-effect="curtain"] { clip-path: inset(0 0 0 0); }
+
+    /* Effect C: Horizontal Wipe */
+    .slide[data-effect="wipe-h"] {
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 1.2s ease;
+    }
+    .slide.active[data-effect="wipe-h"] { clip-path: inset(0 0 0 0); }
+
+    /* Effect D: Spotlight (Bottom Up) */
+    .slide[data-effect="spotlight"] {
+        clip-path: circle(0% at 50% 100%);
+        transition: clip-path 1.5s ease;
+    }
+    .slide.active[data-effect="spotlight"] { clip-path: circle(150% at 50% 100%); }
+
+    /* --- CONTENT BOX STYLING --- */
+    .overlay-box {
+        background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px);
+        padding: 40px; border: 1px solid rgba(212, 175, 55, 0.3);
+        max-width: 600px; width: 90%; border-radius: 4px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center;
+        opacity: 0; transform: translateY(50px);
+        transition: all 1s ease 0.8s;
+    }
+    .slide.active .overlay-box { opacity: 1; transform: translateY(0); }
+
+    h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 10px; color: var(--gold); }
+    h3 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #fff; margin-bottom: 5px; }
+    p { font-family: 'Lato', sans-serif; line-height: 1.6; color: #ddd; margin-bottom: 15px; }
+    
+    .date-badge { 
+        display: inline-block; border: 1px solid var(--gold); padding: 5px 15px; 
+        font-family: 'Cinzel'; margin-bottom: 20px; color: var(--gold); letter-spacing: 2px;
+    }
+    .gold-divider { width: 80px; height: 1px; background: var(--gold); margin: 20px auto; opacity: 0.6; }
+    
+    /* COUNTDOWN & FAQ */
+    .cd-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+    .cd-box { border: 1px solid var(--gold); padding: 15px; min-width: 80px; }
+    .cd-num { display: block; font-family: 'Cinzel'; font-size: 2rem; color: var(--gold); }
+    .cd-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 20px; }
+    .faq-item h4 { color: var(--gold); font-family: 'Cinzel'; font-size: 0.9rem; margin-bottom: 5px; }
+    .faq-item p { font-size: 0.8rem; color: #ccc; margin-bottom: 0; }
+
+    /* ATTIRE TAG */
+    .attire-tag { font-size: 0.8rem; font-style: italic; color: #aaa; margin-top: 10px; }
+
 </style>
 </head>
 <body>
 
-    <div id="cover">
-        <div class="top-row">
-            <span>A Double Celebration</span>
-            <span id="cover-date"></span>
-        </div>
-        <div class="title-container">
-            <div class="big-title">
-                Barat & Waleema
-                <span>Joyfully Inviting You</span>
-            </div>
-        </div>
-        <div class="bottom-row">
-            <button class="enter-btn" id="enter-trigger">Open Invite</button>
+    <div id="cover-screen">
+            <img src="pic.jpg" class="bg-image" alt="bg">
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_24fps.mp4" type="video/mp4">
+        </video>
+        
+        <div class="cover-content">
+            <div class="cover-ornament">In the name of Allah</div>
+            <div class="cover-names">You are formally invited</div>
+            <p style="letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase;">to the Wedding Ceremony of Aiza</p>
+            <button class="open-btn" id="btn-open">Open Invitation</button>
         </div>
     </div>
 
-    <main class="snap-container" id="main-site">
+    <div id="slider-container">
         
-        <section id="sec-intro">
-            <h2>A Harmonious Union</h2>
-            <div class="divider"></div>
-            <p style="color: #666;">Celebrating the Barat of our beloved sister<br>and the Waleema of our dear brother.<br>We count the days until we welcome you.</p>
-            <div class="countdown-wrapper">
-                <div id="countdown">
-                    <div class="time-unit"><span class="unit-number" id="months">0</span><span class="unit-label">Months</span></div>
-                    <div class="time-unit"><span class="unit-number" id="days">0</span><span class="unit-label">Days</span></div>
-                    <div class="time-unit"><span class="unit-number" id="hours">0</span><span class="unit-label">Hours</span></div>
-                    <div class="time-unit"><span class="unit-number" id="minutes">0</span><span class="unit-label">Mins</span></div>
-                    <div class="time-unit"><span class="unit-number" style="color: #999;" id="seconds">0</span><span class="unit-label">Secs</span></div>
+        <div class="slide active" data-effect="wipe-h">
+            <img src="a.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <h3>The Wait</h3>
+                <h2>Countdown</h2>
+                <div class="gold-divider"></div>
+                <p>Counting the seconds until the celebration begins.</p>
+                <div class="cd-container">
+                    <div class="cd-box"><span class="cd-num" id="d">00</span><span class="cd-label">Days</span></div>
+                    <div class="cd-box"><span class="cd-num" id="h">00</span><span class="cd-label">Hours</span></div>
+                    <div class="cd-box"><span class="cd-num" id="m">00</span><span class="cd-label">Mins</span></div>
+                    <div class="cd-box"><span class="cd-num" id="s">00</span><span class="cd-label">Secs</span></div>
                 </div>
             </div>
-            <div class="scroll-hint">↓</div>
-        </section>
+        </div>
 
-        <section id="sec-location">
-            <div class="venue-card">
-                <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; color: #ddd; margin-bottom: 20px;">The Venue</div>
-                <h2>Rosemary Marquee</h2>
-                <div class="divider"></div>
-                <p>Rosemary Ave, near Allah Square<br>Phase 7 Bahria Town, Islamabad</p>
-                <a href="https://www.google.com/maps/search/Rosemary+Marquee+Bahria+Town+Phase+7+Islamabad" target="_blank" class="map-btn">Get Directions</a>
+        <div class="slide" data-effect="circle">
+            <img src="b.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <div class="date-badge">March 23, 2026</div>
+                <h3>The Start</h3>
+                <h2>Qawali Night</h2>
+                <div class="gold-divider"></div>
+                <p>A soulful evening of Sufi melodies to begin the festivities.</p>
+                <p><strong>Rosemary Marquee (Hall A)</strong><br>07:00 PM</p>
+                <div class="attire-tag">Attire: Eastern Casual / Comfortable</div>
             </div>
-        </section>
+        </div>
 
-        <section id="sec-dress-code">
-            <div class="glass-card">
-                <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Dress Code</div>
-                <h2>Kameez Shalwar</h2>
-                <div class="divider"></div>
-                <p>Traditional attire is highly encouraged as we celebrate our family heritage together.</p>
+        <div class="slide" data-effect="curtain">
+            <img src="c.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <div class="date-badge">March 25, 2026</div>
+                <h3>Rang-e-Hina</h3>
+                <h2>Mehndi</h2>
+                <div class="gold-divider"></div>
+                <p>Music, Dance & Colors.</p>
+                <p><strong>Rosemary Marquee (Hall A)</strong><br>07:00 PM</p>
+                <div class="attire-tag">Attire: Vibrant Traditional (Yellows & Greens)</div>
             </div>
-        </section>
+        </div>
 
-        <section id="sec-guest">
-            <div class="ticket-stub">
-                <div style="font-family:'Lato'; text-transform:uppercase; letter-spacing:2px; font-size:0.7rem; margin-bottom:15px; opacity:0.7;">Admit One</div>
-                <span class="big-number" id="guest-count-display">0</span>
-                <p style="font-size: 1.2rem; margin-bottom: 5px;">Guests Reserved</p>
-                <div class="divider" style="background: #fff; width: 40px;"></div>
-                <p style="font-size: 0.9rem; opacity: 0.8;">Valet Parking will be provided<br>at the venue entrance.</p>
+        <div class="slide" data-effect="wipe-h">
+            <img src="d.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <div class="date-badge">March 29, 2026</div>
+                <h3>The Royal Union</h3>
+                <h2>Baraat</h2>
+                <div class="gold-divider"></div>
+                <p>The Rukhsati of our beloved Aiza.</p>
+                <p><strong>Rosemary Marquee (Grand Hall)</strong><br>01:00 PM</p>
+                <div class="attire-tag">Attire: Formal Traditional (Red/Gold)</div>
             </div>
-        </section>
+        </div>
 
-        <section id="sec-timeline">
-            <h2 style="margin-bottom: 40px;">Order of Events</h2>
-            <div class="timeline">
-                <div class="event-row">
-                    <div class="event-time">12:00 PM</div>
-                    <div class="event-desc">Guest Arrival</div>
-                </div>
-                <div class="event-row">
-                    <div class="event-time">01:00 PM</div>
-                    <div class="event-desc">Nikkah & Waleema Ceremony</div>
-                </div>
-                <div class="event-row">
-                    <div class="event-time">02:00 PM</div>
-                    <div class="event-desc">Festive Lunch</div>
-                </div>
-                <div class="event-row">
-                    <div class="event-time">03:30 PM</div>
-                    <div class="event-desc">Rukhsati</div>
+        <div class="slide" data-effect="spotlight">
+            <img src="e.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <div class="date-badge">March 31, 2026</div>
+                <h3>The Grand Reception</h3>
+                <h2>Walima</h2>
+                <div class="gold-divider"></div>
+                <p>Celebrating the newlyweds.</p>
+                <p><strong>Rosemary Marquee (Grand Hall)</strong><br>07:30 PM</p>
+                <div class="attire-tag">Attire: Formal Suit / Evening Gown / Pastels</div>
+            </div>
+        </div>
+
+        <div class="slide" data-effect="wipe-h">
+            <img src="f.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box">
+                <h3>Important Details</h3>
+                <h2>Guest Information</h2>
+                <div class="gold-divider"></div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h4>Punctuality</h4>
+                        <p>We request you to kindly adhere to the time for all events.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Gifts</h4>
+                        <p>Your presence is the only gift we cherish. No boxed gifts, please.</p>
+                    </div>
+                    <div class="faq-item" style="grid-column: span 2; margin-top:10px; text-align:center;">
+                        <h4>Children</h4>
+                        <p>Children are welcome to join the celebration!</p>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="sec-faq">
-            <h2 style="margin-bottom: 30px;">Details</h2>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <div class="faq-q">Children</div>
-                    <div class="faq-a">To allow all guests to enjoy the day, this is an adults-only celebration.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-q">Gifts</div>
-                    <div class="faq-a">Your presence is the only gift we require. Strictly no boxed gifts please.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-q">Assistance</div>
-                    <div class="faq-a">For any queries, please reach out to the family coordinators at the venue.</div>
-                </div>
+        <div class="slide" data-effect="circle">
+            <img src="g.jpg" class="bg-image" alt="bg">
+            <div class="overlay-box" style="border: none; box-shadow: none; background: transparent;">
+                <h3 style="font-size: 4rem; color: var(--gold);">Thank You</h3>
+                <p>We look forward to creating beautiful memories with you.</p>
+                <div class="gold-divider"></div>
+                <p style="font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">With Love, The Family</p>
             </div>
-        </section>
-
-        <section id="sec-final">
-            <div class="final-card">
-                <p style="text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 20px;">We look forward to seeing you</p>
-                <h2>Thank You</h2>
-                <div class="divider"></div>
-                <p>With Prayers & Love,<br>The Family</p>
-            </div>
-        </section>
-
-    </main>
+        </div>
+        
+    </div>
 
     <script>
         // CONFIG
-        const NUMBER_OF_GUESTS = 2;
-        const WEDDING_DATE = "March 29, 2026";
-        const COUNTDOWN_TARGET = "March 29, 2026 12:00:00"; 
-        
-        // APPLY
-        document.getElementById('guest-count-display').innerText = NUMBER_OF_GUESTS;
-        document.getElementById('cover-date').innerText = WEDDING_DATE.replace(",", "."); 
+        const slides = document.querySelectorAll('.slide');
+        const cover = document.getElementById('cover-screen');
+        const btnOpen = document.getElementById('btn-open');
+        let currentSlide = 0;
+        let isAnimating = false;
+        let isCoverOpen = false;
 
-        // ANIMATION
-        const btn = document.getElementById('enter-trigger');
-        const cover = document.getElementById('cover');
-        const site = document.getElementById('main-site');
-
-        btn.addEventListener('click', () => {
-            cover.classList.add('slide-up');
-            site.classList.add('show-content');
+        // OPEN INVITE
+        btnOpen.addEventListener('click', () => {
+            cover.classList.add('slide-up-out');
+            setTimeout(() => isCoverOpen = true, 1200);
         });
 
-        // COUNTDOWN LOGIC
-        const targetDate = new Date(COUNTDOWN_TARGET).getTime();
-        function updateCountdown() {
-            const now = new Date();
-            const target = new Date(targetDate);
-            let diff = target - now;
-            if (diff <= 0) { document.getElementById("countdown").innerHTML = "The Celebration Begins!"; return; }
-
-            let months = (target.getFullYear() - now.getFullYear()) * 12 + (target.getMonth() - now.getMonth());
-            if (target.getDate() < now.getDate()) months--;
+        // SLIDE LOGIC
+        function changeSlide(direction) {
+            if (isAnimating) return;
+            const nextIndex = currentSlide + direction;
             
-            let tempDate = new Date(now);
-            tempDate.setMonth(now.getMonth() + months);
-            
-            let remainingDiff = target - tempDate;
-            const days = Math.floor(remainingDiff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((remainingDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((remainingDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remainingDiff % (1000 * 60)) / 1000);
-
-            document.getElementById("months").innerText = months < 0 ? 0 : months;
-            document.getElementById("days").innerText = days;
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            if (nextIndex >= 0 && nextIndex < slides.length) {
+                isAnimating = true;
+                
+                // Remove active from current
+                slides[currentSlide].classList.remove('active');
+                
+                // Add active to next
+                slides[nextIndex].classList.add('active');
+                
+                currentSlide = nextIndex;
+                
+                setTimeout(() => isAnimating = false, 1500); // Wait for transition
+            }
         }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+
+        // INPUT HANDLERS
+        window.addEventListener('wheel', (e) => {
+            if (!isCoverOpen) return;
+            if (e.deltaY > 0) changeSlide(1);
+            else changeSlide(-1);
+        });
+        
+        let touchStart = 0;
+        window.addEventListener('touchstart', e => touchStart = e.touches[0].clientY);
+        window.addEventListener('touchmove', e => {
+            if (!isCoverOpen || isAnimating) return;
+            let diff = touchStart - e.touches[0].clientY;
+            if (Math.abs(diff) > 50) {
+                changeSlide(diff > 0 ? 1 : -1);
+            }
+        });
+
+        // COUNTDOWN (To First Event: March 23)
+        const target = new Date("March 23, 2026 19:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            let diff = target - now;
+            if(diff > 0) {
+                document.getElementById("d").innerText = Math.floor(diff / (86400000));
+                document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000);
+                document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000);
+                document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000);
+            } else {
+                document.getElementById("d").parentElement.parentElement.innerHTML = "The Celebrations Have Begun!";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
