@@ -45,40 +45,52 @@
         background: #000;
     }
 
-    /* --- UPDATED DARK OVERLAY --- */
     .cover-overlay {
         position: absolute; top: 0; left: 0; 
         width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.6); /* 60% Black Overlay for contrast */
+        background: rgba(0, 0, 0, 0.6); 
         z-index: -1;
     }
 
-    .cover-content { position: relative; z-index: 2; padding: 20px; }
+    .cover-content { position: relative; z-index: 2; padding: 20px; display: flex; flex-direction: column; align-items: center; }
     .slide-up-out { transform: translateY(-100%); }
 
     .cover-ornament { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
     .cover-names {
         font-family: 'Cinzel', serif; font-size: 4rem; text-transform: uppercase; letter-spacing: 8px; color: #fff;
         border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 20px 40px; margin: 20px 0;
-        text-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Added text shadow for extra readability */
+        text-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
     
-    @media (max-width: 600px) {
-        .cover-names { font-size: 2.5rem; letter-spacing: 4px; padding: 15px 20px; }
-    }
-
     .open-btn {
-        margin-top: 40px; padding: 15px 40px; background: transparent; border: 2px solid var(--gold); color: var(--gold);
+        margin-top: 30px; padding: 15px 40px; background: transparent; border: 2px solid var(--gold); color: var(--gold);
         font-family: 'Cinzel', serif; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 3px;
         transition: all 0.4s ease;
         text-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
     .open-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); text-shadow: none; }
 
+    .swipe-hint {
+        margin-top: 20px;
+        font-family: 'Lato', sans-serif;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        opacity: 0.8;
+        animation: bounce 2s infinite;
+        color: #ddd;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-10px);}
+        60% {transform: translateY(-5px);}
+    }
+
     /* --- 2. SLIDER CONTAINER --- */
     #slider-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
 
-    /* --- MORPHING SLIDES LOGIC --- */
+    /* --- SLIDE LOGIC --- */
     .slide {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -87,32 +99,17 @@
     }
     .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
 
-    /* Effect A: Circular Expand (Iris) */
-    .slide[data-effect="circle"] {
-        clip-path: circle(0% at 50% 50%);
-        transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
-    }
+    /* Effects */
+    .slide[data-effect="circle"] { clip-path: circle(0% at 50% 50%); transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
     .slide.active[data-effect="circle"] { clip-path: circle(150% at 50% 50%); }
 
-    /* Effect B: Vertical Curtain */
-    .slide[data-effect="curtain"] {
-        clip-path: inset(0 50% 0 50%);
-        transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1);
-    }
+    .slide[data-effect="curtain"] { clip-path: inset(0 50% 0 50%); transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
     .slide.active[data-effect="curtain"] { clip-path: inset(0 0 0 0); }
 
-    /* Effect C: Horizontal Wipe */
-    .slide[data-effect="wipe-h"] {
-        clip-path: inset(0 0 100% 0);
-        transition: clip-path 1.2s ease;
-    }
+    .slide[data-effect="wipe-h"] { clip-path: inset(0 0 100% 0); transition: clip-path 1.2s ease; }
     .slide.active[data-effect="wipe-h"] { clip-path: inset(0 0 0 0); }
 
-    /* Effect D: Spotlight (Bottom Up) */
-    .slide[data-effect="spotlight"] {
-        clip-path: circle(0% at 50% 100%);
-        transition: clip-path 1.5s ease;
-    }
+    .slide[data-effect="spotlight"] { clip-path: circle(0% at 50% 100%); transition: clip-path 1.5s ease; }
     .slide.active[data-effect="spotlight"] { clip-path: circle(150% at 50% 100%); }
 
     /* --- CONTENT BOX STYLING --- */
@@ -130,10 +127,7 @@
     h3 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #fff; margin-bottom: 5px; }
     p { font-family: 'Lato', sans-serif; line-height: 1.6; color: #ddd; margin-bottom: 15px; }
     
-    .date-badge { 
-        display: inline-block; border: 1px solid var(--gold); padding: 5px 15px; 
-        font-family: 'Cinzel'; margin-bottom: 20px; color: var(--gold); letter-spacing: 2px;
-    }
+    .date-badge { display: inline-block; border: 1px solid var(--gold); padding: 5px 15px; font-family: 'Cinzel'; margin-bottom: 20px; color: var(--gold); letter-spacing: 2px; }
     .gold-divider { width: 80px; height: 1px; background: var(--gold); margin: 20px auto; opacity: 0.6; }
     
     /* COUNTDOWN & FAQ */
@@ -145,20 +139,46 @@
     .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 20px; }
     .faq-item h4 { color: var(--gold); font-family: 'Cinzel'; font-size: 0.9rem; margin-bottom: 5px; }
     .faq-item p { font-size: 0.8rem; color: #ccc; margin-bottom: 0; }
-
     .attire-tag { font-size: 0.8rem; font-style: italic; color: #aaa; margin-top: 10px; }
+
+    /* === MOBILE SPECIFIC FIXES === */
+    @media (max-width: 600px) {
+        /* Fix 1: Cover Text Sizing */
+        .cover-names { font-size: 2.5rem; letter-spacing: 4px; padding: 15px 20px; }
+
+        /* Fix 2: Countdown Timer Fit */
+        .cd-container { gap: 8px; }
+        .cd-box { padding: 8px 4px; min-width: 55px; }
+        .cd-num { font-size: 1.4rem; }
+        .cd-label { font-size: 0.5rem; }
+        .overlay-box { padding: 25px; } /* Slightly reduce overall padding on mobile */
+
+        /* Fix 3: Move "Thank You" Text Box Upwards */
+        /* Targets only the last slide's box on mobile */
+        .slide:last-child .overlay-box {
+            margin-bottom: 25vh; /* Pushes box up by 25% of viewport height */
+        }
+    }
 
 </style>
 </head>
 <body>
 
     <div id="cover-screen">
-        <img src="pic.jpg" class="bg-image" alt="Cover Background">
-        <div class="cover-overlay"></div> <div class="cover-content">
+        <img src="pic.jpg" class="bg-image" style="object-position: center 70%;" alt="Cover Background">
+        <div class="cover-overlay"></div> 
+        
+        <div class="cover-content">
             <div class="cover-ornament">In the name of Allah</div>
             <div class="cover-names">You are formally invited</div>
             <p style="letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase;">to the Wedding Ceremony of Aiza</p>
+            
             <button class="open-btn" id="btn-open">Open Invitation</button>
+            
+            <div class="swipe-hint">
+                Swipe to move forward<br>
+                &uarr;
+            </div>
         </div>
     </div>
 
@@ -276,50 +296,54 @@
         let isAnimating = false;
         let isCoverOpen = false;
 
-        // OPEN INVITE
-        btnOpen.addEventListener('click', () => {
+        // OPEN FUNCTION
+        function openCover() {
             cover.classList.add('slide-up-out');
             setTimeout(() => isCoverOpen = true, 1200);
-        });
+        }
+        btnOpen.addEventListener('click', openCover);
 
         // SLIDE LOGIC
         function changeSlide(direction) {
             if (isAnimating) return;
             const nextIndex = currentSlide + direction;
-            
             if (nextIndex >= 0 && nextIndex < slides.length) {
                 isAnimating = true;
-                
-                // Remove active from current
                 slides[currentSlide].classList.remove('active');
-                
-                // Add active to next
                 slides[nextIndex].classList.add('active');
-                
                 currentSlide = nextIndex;
-                
-                setTimeout(() => isAnimating = false, 1500); // Wait for transition
+                setTimeout(() => isAnimating = false, 1500); 
             }
         }
 
-        // INPUT HANDLERS
+        // MOUSE WHEEL
         window.addEventListener('wheel', (e) => {
-            if (!isCoverOpen) return;
+            if (!isCoverOpen) {
+                if(e.deltaY > 0) openCover();
+                return;
+            }
             if (e.deltaY > 0) changeSlide(1);
             else changeSlide(-1);
         });
         
+        // TOUCH SUPPORT
         let touchStart = 0;
         window.addEventListener('touchstart', e => touchStart = e.touches[0].clientY);
         window.addEventListener('touchmove', e => {
-            if (!isCoverOpen || isAnimating) return;
             let diff = touchStart - e.touches[0].clientY;
+            
+            if (!isCoverOpen) {
+                if (diff > 50) openCover();
+                return;
+            }
+
+            if (isAnimating) return;
             if (Math.abs(diff) > 50) {
                 changeSlide(diff > 0 ? 1 : -1);
             }
         });
 
-        // COUNTDOWN (To First Event: March 23)
+        // COUNTDOWN
         const target = new Date("March 23, 2026 19:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
