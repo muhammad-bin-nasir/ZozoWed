@@ -94,12 +94,14 @@
     .slide {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
-        opacity: 0; pointer-events: none; z-index: 1;
-        transition: opacity 0.5s ease;
+        /* UPDATED: Opacity removed so background transition works */
+        pointer-events: none; 
+        z-index: 1;
     }
-    .slide.active { opacity: 1; pointer-events: all; z-index: 10; }
+    .slide.active { pointer-events: all; z-index: 10; }
 
     /* Effects */
+    /* All inactive slides are hidden by clip-path, not opacity */
     .slide[data-effect="circle"] { clip-path: circle(0% at 50% 50%); transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
     .slide.active[data-effect="circle"] { clip-path: circle(150% at 50% 50%); }
 
@@ -118,10 +120,19 @@
         padding: 40px; border: 1px solid rgba(212, 175, 55, 0.3);
         max-width: 600px; width: 90%; border-radius: 4px;
         box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center;
+        
+        /* Default Entry Animation */
         opacity: 0; transform: translateY(50px);
-        transition: all 1s ease 0.8s;
+        transition: all 1s ease 0.8s; /* Delayed entry */
     }
     .slide.active .overlay-box { opacity: 1; transform: translateY(0); }
+
+    /* NEW: Exit Class for Sequence */
+    .overlay-box.out {
+        opacity: 0 !important;
+        transform: translateY(-20px) !important;
+        transition: all 0.5s ease 0s !important; /* Fast exit, no delay */
+    }
 
     h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 10px; color: var(--gold); }
     h3 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #fff; margin-bottom: 5px; }
@@ -143,21 +154,13 @@
 
     /* === MOBILE SPECIFIC FIXES === */
     @media (max-width: 600px) {
-        /* Fix 1: Cover Text Sizing */
         .cover-names { font-size: 2.5rem; letter-spacing: 4px; padding: 15px 20px; }
-
-        /* Fix 2: Countdown Timer Fit */
         .cd-container { gap: 8px; }
         .cd-box { padding: 8px 4px; min-width: 55px; }
         .cd-num { font-size: 1.4rem; }
         .cd-label { font-size: 0.5rem; }
-        .overlay-box { padding: 25px; } /* Slightly reduce overall padding on mobile */
-
-        /* Fix 3: Move "Thank You" Text Box Upwards */
-        /* Targets only the last slide's box on mobile */
-        .slide:last-child .overlay-box {
-            margin-bottom: 25vh; /* Pushes box up by 25% of viewport height */
-        }
+        .overlay-box { padding: 25px; }
+        .slide:last-child .overlay-box { margin-bottom: 25vh; }
     }
 
 </style>
@@ -307,12 +310,39 @@
         function changeSlide(direction) {
             if (isAnimating) return;
             const nextIndex = currentSlide + direction;
+
             if (nextIndex >= 0 && nextIndex < slides.length) {
                 isAnimating = true;
-                slides[currentSlide].classList.remove('active');
-                slides[nextIndex].classList.add('active');
-                currentSlide = nextIndex;
-                setTimeout(() => isAnimating = false, 1500); 
+                
+                // 1. Identify Elements
+                const currentEl = slides[currentSlide];
+                const nextEl = slides[nextIndex];
+                const currentBox = currentEl.querySelector('.overlay-box');
+                const nextBox = nextEl.querySelector('.overlay-box');
+
+                // 2. Animate TEXT OUT (Fade away the card first)
+                if(currentBox) currentBox.classList.add('out');
+
+                // 3. WAIT for text to fade, then animate BACKGROUND
+                setTimeout(() => {
+                    // Bring next slide to top (Z-Index 20) so it animates OVER existing one
+                    nextEl.style.zIndex = '20';
+                    nextEl.classList.add('active'); // Triggers Clip-Path Animation
+
+                    // 4. WAIT for background animation to finish
+                    setTimeout(() => {
+                        // Cleanup Old Slide
+                        currentEl.classList.remove('active'); // Hide old one
+                        if(currentBox) currentBox.classList.remove('out'); // Reset text for next time
+                        
+                        // Reset Z-Index of new slide to standard active level
+                        nextEl.style.zIndex = ''; 
+                        
+                        currentSlide = nextIndex;
+                        isAnimating = false;
+                    }, 1500); // This matches the longest CSS transition time (1.5s)
+                    
+                }, 500); // 500ms delay for text fade out
             }
         }
 
@@ -354,7 +384,9 @@
                 document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000);
                 document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000);
             } else {
-                document.getElementById("d").parentElement.parentElement.innerHTML = "The Celebrations Have Begun!";
+                // Check if element exists before setting (prevents errors on other pages)
+                const dElement = document.getElementById("d");
+                if(dElement) dElement.parentElement.parentElement.innerHTML = "The Celebrations Have Begun!";
             }
         }, 1000);
     </script>
