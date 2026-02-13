@@ -55,7 +55,25 @@
     .cover-content { position: relative; z-index: 2; padding: 20px; display: flex; flex-direction: column; align-items: center; }
     .slide-up-out { transform: translateY(-100%); }
 
-    .cover-ornament { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
+    /* Updated Ornament Style to move it up */
+    .cover-ornament { 
+        font-family: 'Great Vibes', cursive; 
+        font-size: 3rem; 
+        color: var(--gold); 
+        margin-bottom: 20px;
+        /* Moves the element up specifically */
+        transform: translateY(-40px); 
+    }
+
+    /* New Class for the specific guest name */
+    .guest-line {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
     .cover-names {
         font-family: 'Cinzel', serif; font-size: 4rem; text-transform: uppercase; letter-spacing: 8px; color: #fff;
         border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 20px 40px; margin: 20px 0;
@@ -222,6 +240,9 @@
         
         <div class="cover-content">
             <div class="cover-ornament">In the name of Allah</div>
+            
+            <div class="guest-line">an invitation for Aleesha</div>
+
             <div class="cover-names">You are formally invited</div>
             <p style="letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase;">to the Wedding Ceremony of Aiza</p>
             
@@ -229,7 +250,7 @@
             
             <div class="swipe-hint">
                 Swipe to move forward<br>
-                &uarr;
+                ↑
             </div>
         </div>
     </div>
