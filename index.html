@@ -94,14 +94,12 @@
     .slide {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         display: flex; flex-direction: column; justify-content: center; align-items: center;
-        /* UPDATED: Opacity removed so background transition works */
         pointer-events: none; 
         z-index: 1;
     }
     .slide.active { pointer-events: all; z-index: 10; }
 
     /* Effects */
-    /* All inactive slides are hidden by clip-path, not opacity */
     .slide[data-effect="circle"] { clip-path: circle(0% at 50% 50%); transition: clip-path 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
     .slide.active[data-effect="circle"] { clip-path: circle(150% at 50% 50%); }
 
@@ -127,11 +125,11 @@
     }
     .slide.active .overlay-box { opacity: 1; transform: translateY(0); }
 
-    /* NEW: Exit Class for Sequence */
+    /* Exit Class */
     .overlay-box.out {
         opacity: 0 !important;
         transform: translateY(-20px) !important;
-        transition: all 0.5s ease 0s !important; /* Fast exit, no delay */
+        transition: all 0.5s ease 0s !important; 
     }
 
     h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 10px; color: var(--gold); }
@@ -141,15 +139,42 @@
     .date-badge { display: inline-block; border: 1px solid var(--gold); padding: 5px 15px; font-family: 'Cinzel'; margin-bottom: 20px; color: var(--gold); letter-spacing: 2px; }
     .gold-divider { width: 80px; height: 1px; background: var(--gold); margin: 20px auto; opacity: 0.6; }
     
-    /* COUNTDOWN & FAQ */
+    /* --- LITTLE HOSTS & NAMES GRID (NEW) --- */
+    .little-hosts-box { 
+        margin-top: 15px; 
+        border-top: 1px dashed rgba(212, 175, 55, 0.3); 
+        padding-top: 15px; 
+    }
+    .lh-label { 
+        font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold); 
+        letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; 
+    }
+    .poetic-line { font-style: italic; font-size: 0.85rem; color: #bbb; margin-bottom: 10px; }
+
+    /* The 2-Column Grid */
+    .names-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+        column-gap: 20px;
+        row-gap: 5px;
+        text-align: center;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .name-item {
+        font-family: 'Great Vibes', cursive;
+        font-size: 1.4rem;
+        color: #fff;
+        line-height: 1.4;
+    }
+
+
+    /* COUNTDOWN */
     .cd-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
     .cd-box { border: 1px solid var(--gold); padding: 15px; min-width: 80px; }
     .cd-num { display: block; font-family: 'Cinzel'; font-size: 2rem; color: var(--gold); }
     .cd-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
 
-    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 20px; }
-    .faq-item h4 { color: var(--gold); font-family: 'Cinzel'; font-size: 0.9rem; margin-bottom: 5px; }
-    .faq-item p { font-size: 0.8rem; color: #ccc; margin-bottom: 0; }
     .attire-tag { font-size: 0.8rem; font-style: italic; color: #aaa; margin-top: 10px; }
 
     /* === MOBILE SPECIFIC FIXES === */
@@ -159,7 +184,10 @@
         .cd-box { padding: 8px 4px; min-width: 55px; }
         .cd-num { font-size: 1.4rem; }
         .cd-label { font-size: 0.5rem; }
+        
         .overlay-box { padding: 25px; }
+        /* Adjust font size for names on small screens */
+        .name-item { font-size: 1.2rem; }
         .slide:last-child .overlay-box { margin-bottom: 25vh; }
     }
 
@@ -210,9 +238,8 @@
                 <h3>The Start</h3>
                 <h2>Qawali Night</h2>
                 <div class="gold-divider"></div>
-                <p>A soulful evening of Sufi melodies to begin the festivities.</p>
-                <p><strong>Rosemary Marquee (Hall A)</strong><br>07:00 PM</p>
-                <div class="attire-tag">Attire: Eastern Casual / Comfortable</div>
+                <p>Mr and Mrs Nazim Bashir invite you to begin the festivities.</p>
+                <p><strong>Rosemary Marquee</strong><br>07:00 PM</p>
             </div>
         </div>
 
@@ -223,9 +250,30 @@
                 <h3>Rang-e-Hina</h3>
                 <h2>Mehndi</h2>
                 <div class="gold-divider"></div>
-                <p>Music, Dance & Colors.</p>
-                <p><strong>Rosemary Marquee (Hall A)</strong><br>07:00 PM</p>
-                <div class="attire-tag">Attire: Vibrant Traditional (Yellows & Greens)</div>
+                
+                <p><strong>Rosemary Marquee</strong><br>07:00 PM</p>
+
+                <div class="little-hosts-box">
+                    <p class="poetic-line">"Green for the hands, gold for the heart,<br>come bless the couple as they start."</p>
+                    
+                    <div class="lh-label">Little Hosts</div>
+                    
+                    <div class="names-grid">
+                        <div class="name-item">Nimra</div>
+                        <div class="name-item">Misbah</div>
+                        <div class="name-item">Sofia</div>
+                        <div class="name-item">Areesha</div>
+                        <div class="name-item">Marwa</div>
+                        <div class="name-item">Fatima</div>
+                        <div class="name-item">Nabira</div>
+                        <div class="name-item">Kubra</div>
+                        <div class="name-item">Aneesha</div>
+                        <div class="name-item">Ayesha</div>
+                        <div class="name-item">Qirat Batool</div>
+                        <div class="name-item">Hoorain Ch</div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
